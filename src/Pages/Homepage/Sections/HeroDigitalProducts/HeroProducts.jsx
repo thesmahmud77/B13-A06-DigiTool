@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import HomeProductPage from "./HeroProductSubPage/HomeProductPage";
 import CartPage from "./HeroProductSubPage/CartPage";
+import Swal from "sweetalert2";
 
 const HeroProducts = () => {
   const [activeTab, setActiveTab] = useState("products");
@@ -8,8 +9,20 @@ const HeroProducts = () => {
 
   const addToCart = (product) => {
     const isExist = cart.find((item) => item.id === product.id);
+    if (isExist) {
+      Swal.fire({
+        title: "Product Already Added",
+        text: "Please Check The Other Products",
+        icon: "question",
+      });
+    }
     if (!isExist) {
       setCart([...cart, product]);
+      Swal.fire({
+        title: "Product Added To the Cart",
+        icon: "success",
+        draggable: true,
+      });
     }
   };
 
@@ -19,6 +32,11 @@ const HeroProducts = () => {
     if (index !== -1) {
       tempCart.splice(index, 1);
       setCart([...tempCart]);
+      Swal.fire({
+        title: "Product Remove Successfully",
+        icon: "success",
+        draggable: true,
+      });
     }
   };
 
